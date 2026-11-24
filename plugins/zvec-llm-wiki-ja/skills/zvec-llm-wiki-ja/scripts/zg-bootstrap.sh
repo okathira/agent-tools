@@ -220,7 +220,8 @@ ensure_persistent_zg() {
     return 1
   fi
   say "ユーザー全体の MCP 用に $ZG_PACKAGE をインストールする"
-  npm install -g "$ZG_ALLOW_SCRIPTS" "$ZG_PACKAGE"
+  zg_detect_allow_scripts
+  npm install -g ${ZG_NPM_ALLOW:+"$ZG_NPM_ALLOW"} "$ZG_PACKAGE"
   hash -r
   if ! zg_has_pinned_version; then
     echo "zg ${ZG_PACKAGE##*@} が PATH から起動できません。npm のグローバル bin ディレクトリを PATH に追加して再実行してください。" >&2
@@ -238,8 +239,17 @@ if (( NODE_MAJOR < 22 )); then
   echo "Node.js 22+ が必要です（検出: v$(node -v)）。中止します。" >&2
   exit 1
 fi
-if ! python3 -c 'import sys, yaml; sys.exit(sys.version_info < (3, 9))' >/dev/null 2>&1; then
+# Windows often has python but not python3.
+if ! python3 -c 'import sys, yaml; sys.exit(sys.version_info < (3, 9))' >/dev/null 2>&1 \
+  && ! python -c 'import sys, yaml; sys.exit(sys.version_info < (3, 9))' >/dev/null 2>&1; then
   warn "llm_wiki.py と okf-generate の validate.py には PyYAML 入りの Python 3.9+ が必要です（pip install pyyaml）"
+fi
+
+if (( ! SKIP_MCP )) && command -v npm >/dev/null 2>&1; then
+  zg_detect_allow_scripts
+  if [[ -z "$ZG_NPM_ALLOW" ]]; then
+    warn "npm $(npm --version) は --allow-scripts（npm 11.16+）に未対応です。プロジェクト MCP の設定は新しい npm のためにこのフラグを残すので、この npm では起動のたびに無害な「Unknown cli config」警告が出ます。消すには npm を更新してください。"
+  fi
 fi
 
 # 2) Check the CLI before making project changes.

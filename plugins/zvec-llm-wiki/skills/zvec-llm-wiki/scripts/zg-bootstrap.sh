@@ -220,7 +220,8 @@ ensure_persistent_zg() {
     return 1
   fi
   say "Installing $ZG_PACKAGE for user-level MCP"
-  npm install -g "$ZG_ALLOW_SCRIPTS" "$ZG_PACKAGE"
+  zg_detect_allow_scripts
+  npm install -g ${ZG_NPM_ALLOW:+"$ZG_NPM_ALLOW"} "$ZG_PACKAGE"
   hash -r
   if ! zg_has_pinned_version; then
     echo "zg ${ZG_PACKAGE##*@} cannot be launched from PATH. Add the npm global bin directory to PATH and retry." >&2
@@ -238,8 +239,17 @@ if (( NODE_MAJOR < 22 )); then
   echo "Node.js 22+ required (found v$(node -v)). Aborting." >&2
   exit 1
 fi
-if ! python3 -c 'import sys, yaml; sys.exit(sys.version_info < (3, 9))' >/dev/null 2>&1; then
+# Windows often has python but not python3.
+if ! python3 -c 'import sys, yaml; sys.exit(sys.version_info < (3, 9))' >/dev/null 2>&1 \
+  && ! python -c 'import sys, yaml; sys.exit(sys.version_info < (3, 9))' >/dev/null 2>&1; then
   warn "Python 3.9+ with PyYAML is needed for llm_wiki.py and okf-generate's validate.py (pip install pyyaml)"
+fi
+
+if (( ! SKIP_MCP )) && command -v npm >/dev/null 2>&1; then
+  zg_detect_allow_scripts
+  if [[ -z "$ZG_NPM_ALLOW" ]]; then
+    warn "npm $(npm --version) predates --allow-scripts (npm 11.16+). The project MCP entry keeps the flag for newer npm, so this npm prints a harmless \"Unknown cli config\" warning at each start; update npm to silence it."
+  fi
 fi
 
 # 2) Check the CLI before making project changes.

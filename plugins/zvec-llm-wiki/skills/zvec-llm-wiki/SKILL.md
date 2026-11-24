@@ -65,7 +65,8 @@ external. Never use `[[wikilinks]]`.
   directory, `x-zvec-aliases`, and `generated` on every change in meaning.
 - Add `verified` only when a person confirmed the content and stated an id such as `human:owner`.
 - Append `log.md`, then run `python3 <skills-dir>/zvec-llm-wiki/scripts/llm_wiki.py index` to
-  regenerate indexes.
+  regenerate indexes. Generation keeps the list marker (`*` or `-`) an existing index uses, so a
+  Markdown formatter such as Prettier does not make the index stale.
 - Preserve rejected approaches: mark replaced pages `status: deprecated` with `superseded_by`.
 
 ### Crystallize
@@ -112,7 +113,11 @@ bash scripts/zg-bootstrap.sh --target cursor codex    # explicit targets; see zg
 bash scripts/zg-bootstrap.sh --embedding <model>      # override default wiki embedding (list: zg.sh --help models)
 ```
 
-Requires Node.js 22+ and Python 3.9+ with PyYAML. The script scaffolds an OKF bundle only when
+Requires Node.js 22+ and Python 3.9+ with PyYAML. On Windows, run the `python3` commands with
+`python` when `python3` is missing. The committed MCP configuration passes `--allow-scripts`, which
+npm 11.16+ understands; older npm prints a harmless `Unknown cli config` warning when MCP starts.
+The bundled launcher omits the flag for older npm.
+The script scaffolds an OKF bundle only when
 `docs/wiki/` is absent, upserts the `AGENTS.md` hot block, configures zg, and builds or incrementally
 updates one index. An existing wiki is untouched. A wiki without `type` frontmatter predates OKF:
 use the `zvec-llm-wiki-okf-migrate` skill.
