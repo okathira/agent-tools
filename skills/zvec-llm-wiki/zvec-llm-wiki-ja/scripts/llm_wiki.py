@@ -50,7 +50,7 @@ ALIAS_RANGE = (3, 6)
 
 LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
 ENTRY_RE = re.compile(r"^([*+-])\s+\[([^\]]*)\]\(([^)\s]+)\)(?:\s+-\s+(.*))?$")
-SENTENCE_END_RE = re.compile(r"(?<!\be\.g)(?<!\bi\.e)(?<!\betc)(?<!\bvs)(?<!\bcf)[.!?](?=\s|$)|[。！？]+(?![」』）)\]])")
+SENTENCE_END_RE = re.compile(r"(?<!\be\.g)(?<!\bi\.e)(?<!\betc)(?<!\bvs)(?<!\bcf)[.!?](?=\s|$)|[。！？]+(?![。！？」』）)\]])")
 SCHEME_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*:")
 WIKILINK_RE = re.compile(r"\[\[[^\]]+\]\]")
 INLINE_CODE_RE = re.compile(r"`[^`]*`")

@@ -54,7 +54,7 @@ ACTOR_RE = re.compile(r"^([^\s/:]+/\S+|[A-Za-z][A-Za-z0-9+.-]*:\S+)$")
 FENCE_RE = re.compile(r"^\s{0,3}(```|~~~)")
 HEADING_RE = re.compile(r"^(#{1,6})(\s+.*)$")
 INLINE_CODE_RE = re.compile(r"`[^`]*`")
-SENTENCE_END_RE = re.compile(r"(?<!\be\.g)(?<!\bi\.e)(?<!\betc)(?<!\bvs)(?<!\bcf)[.!?](?=\s|$)|[。！？]+(?![」』）)\]])")
+SENTENCE_END_RE = re.compile(r"(?<!\be\.g)(?<!\bi\.e)(?<!\betc)(?<!\bvs)(?<!\bcf)[.!?](?=\s|$)|[。！？]+(?![。！？」』）)\]])")
 LOG_PREAMBLE = ("新しい日付が上。各 entry は **Ingest**、**Record**、**Crystallize**、**Lint** などの"
                 "操作名の太字で始め、変更したページへリンクする。")
 

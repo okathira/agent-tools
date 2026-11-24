@@ -114,8 +114,8 @@ bash scripts/zg-bootstrap.sh --embedding <model>      # デフォルト wiki 埋
 ```
 
 Node.js 22+ と、PyYAML 入りの Python 3.9+ が必要。Windows で `python3` が無いときは、`python3` の
-コマンドを `python` で実行する。ランチャーと MCP 設定の `--allow-scripts` は npm 11.16+ が解釈する。
-それより古い npm では無害な `Unknown cli config` 警告が出る。
+コマンドを `python` で実行する。コミットする MCP 設定は `--allow-scripts` を渡し、npm 11.16+ がそれを解釈する。
+それより古い npm では、MCP の起動時に無害な `Unknown cli config` 警告が出る。同梱のランチャーは、古い npm にはこのフラグを渡さない。
 `docs/wiki/` がないときだけ OKF bundle のひな形を
 作り、`AGENTS.md` のホットブロックを upsert し、zg を設定して 1 つの index を構築または増分更新する。
 既存 wiki には触れない。`type` frontmatter の無い wiki は OKF 以前の形式なので、
