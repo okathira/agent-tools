@@ -67,7 +67,8 @@ ingest 前に Markdown へ変換し、その Markdown は `docs/raw/` に置く�
   ディレクトリから決まる `type`、`x-zvec-aliases`、意味を変えるたびの `generated`。
 - `verified` は、人が内容を確認し `human:owner` のような ID を明示したときだけ足す。
 - `log.md` に追記し、`python3 <skills-dir>/zvec-llm-wiki-ja/scripts/llm_wiki.py index` で index を
-  再生成する。
+  再生成する。生成は既存の index が使う箇条書きの記号（`*` か `-`）を引き継ぐので、Prettier などで
+  整形しても index は古くならない。
 - 却下案を保持する: 置き換えたページは `status: deprecated` と `superseded_by` を付けて残す。
 
 ### Crystallize
@@ -112,7 +113,10 @@ bash scripts/zg-bootstrap.sh --target cursor codex    # 明示的ターゲット
 bash scripts/zg-bootstrap.sh --embedding <model>      # デフォルト wiki 埋め込みを上書き（一覧: zg.sh --help models）
 ```
 
-Node.js 22+ と、PyYAML 入りの Python 3.9+ が必要。`docs/wiki/` がないときだけ OKF bundle のひな形を
+Node.js 22+ と、PyYAML 入りの Python 3.9+ が必要。Windows で `python3` が無いときは、`python3` の
+コマンドを `python` で実行する。ランチャーと MCP 設定の `--allow-scripts` は npm 11.16+ が解釈する。
+それより古い npm では無害な `Unknown cli config` 警告が出る。
+`docs/wiki/` がないときだけ OKF bundle のひな形を
 作り、`AGENTS.md` のホットブロックを upsert し、zg を設定して 1 つの index を構築または増分更新する。
 既存 wiki には触れない。`type` frontmatter の無い wiki は OKF 以前の形式なので、
 `zvec-llm-wiki-okf-migrate-ja` スキルで移行する。

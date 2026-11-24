@@ -9,7 +9,7 @@ x-zvec-aliases:
   - heading-only stubs
   - MCP zg PATH
   - stale skill install
-generated: { by: "codex/gpt-6.2-sol", at: "2026-11-21T12:57:19Z" }
+generated: { by: "claude-code/claude-opus-5-5", at: "2026-11-23T06:15:56Z" }
 verified:
   - { by: "human:owner", at: "2026-11-20T15:31:00Z" }
 sources:
@@ -19,6 +19,12 @@ sources:
   - id: llm-wiki-py
     resource: ../../../skills/zvec-llm-wiki/zvec-llm-wiki/scripts/llm_wiki.py
     title: zvec-llm-wiki index and lint script
+  - id: okf-migrate-py
+    resource: ../../../skills/zvec-llm-wiki-okf-migrate/zvec-llm-wiki-okf-migrate/scripts/okf_migrate.py
+    title: zvec-llm-wiki OKF migration script
+  - id: zg-sh
+    resource: ../../../skills/zvec-llm-wiki/zvec-llm-wiki/scripts/zg.sh
+    title: zvec-llm-wiki pinned zg launcher
 ---
 
 # Do not commit `.zvec-grep/`
@@ -54,6 +60,10 @@ Heading-only pages rank in semantic search but provide no evidence. The scaffold
 
 `llm_wiki.py index` rewrites every `index.md` below the root frontmatter from page `title` and `description`. Hand edits to entries are lost; fix the page frontmatter instead. Section headings and directory descriptions already in an index are kept.[^llm-wiki-py]
 
+Generation keeps the list marker an existing index uses, so Prettier turning `*` into `-` does not make lint fail with ZE010. The root frontmatter is copied as written. A new index starts with `*`, as OKF shows.
+
+Indexes copy each `description`, so keep it to one sentence. Lint warns ZW038 when it is longer. Both lint and the migration count `。`, `！`, and `？` as sentence ends even without a following space. The migration leaves a longer Japanese lead in the body and prints a note.[^okf-migrate-py]
+
 # Markdown without type does not belong in the bundle
 
 `validate.py` warns W120 for a Markdown file that is not a concept, and `--strict` fails on that warning. OKF keeps this for files such as a README. An immutable import is not a README: put it in `docs/raw/`, outside `docs/wiki/`, and cite it with a path relative to the page. Do not special-case the validator.
@@ -61,6 +71,16 @@ Heading-only pages rank in semantic search but provide no evidence. The scaffold
 # Python and PyYAML are prerequisites
 
 `llm_wiki.py`, the migration script, and `okf-generate`'s `validate.py` need Python 3.9+ with PyYAML. macOS system Python ships without PyYAML; run `pip3 install --user pyyaml`. In a sandboxed agent shell, that install needs network access to PyPI.
+
+Windows often has `python` but no working `python3`. Run the documented `python3` commands with `python` there. The installer and bootstrap check both names before warning about PyYAML.
+
+# Scripts write LF and slash-separated paths
+
+`llm_wiki.py index` and `okf_migrate.py` write UTF-8 with LF on every OS, so a Windows run does not add CRLF diffs. The migration writes `sources[].resource` and the links in moved-page stubs with `/` separators.[^okf-migrate-py]
+
+# Older npm warns about `--allow-scripts`
+
+npm 11.16 added the `--allow-scripts` config. Older npm runs install scripts by default and prints `Unknown cli config "--allow-scripts"` for the flag. The bundled `zg.sh` passes the flag only to npm 11.16+.[^zg-sh] The committed MCP entries keep it for teammates on newer npm, so an older npm still prints the warning there. Bootstrap warns once when it finds such an npm.
 
 # Japanese retrieval needs aliases
 
@@ -76,5 +96,7 @@ This catalog wiki is English. Prefer English ubiquitous-language aliases; see [C
 
 [^zg-bootstrap-sh]: zvec-llm-wiki bootstrap script
 [^llm-wiki-py]: zvec-llm-wiki index and lint script
+[^okf-migrate-py]: zvec-llm-wiki OKF migration script
+[^zg-sh]: zvec-llm-wiki pinned zg launcher
 
 Use the installed wiki skill's `scripts/zg.sh` from the target repository to keep index commands on the project MCP version. If a different `zg` is on PATH, the launcher uses the pinned npm package. User-level bootstrap requires the matching binary on PATH because user-level MCP launches `zg` directly.

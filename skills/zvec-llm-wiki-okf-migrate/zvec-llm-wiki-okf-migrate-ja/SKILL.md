@@ -13,6 +13,7 @@ license: MIT
 このスキルは、旧来の zvec-llm-wiki のページ契約で書かれた wiki を、`zvec-llm-wiki-ja` が今維持している
 OKF bundle へ変換する。同じスキルディレクトリに次の兄弟スキルが必要: `zvec-llm-wiki-ja`
 （`llm_wiki.py` 用）、`okf-generate`（`validate.py` と書き方の規則）。PyYAML 入りの Python 3.9+ も必要。
+Windows で `python3` が無いときは、`python3` のコマンドを `python` で実行する。
 
 移行は全ページを書き換えるので、`generated.at` が移行時刻になり、すべての concept が未検証になる。
 これは想定どおりで、移行が OKF の信頼度の起点になる。最後の手順で人に結果を確認してもらい、

@@ -28,7 +28,7 @@ To update zvec-grep, edit [zvec-grep.version](zvec-grep.version), run `python pl
 
 ## Optional local installation test
 
-The following client paths are ready for testing. Use a clean profile and a separate test repository. Record the client version and OS. Have Node.js 22+, npm/npx, Bash, and Python 3.9+ with PyYAML available. On Windows, run Bash scripts from Git Bash. In each command, use the absolute path to the generated marketplace.
+The following client paths are ready for testing. Use a clean profile and a separate test repository. Record the client version and OS. Have Node.js 22+, npm/npx 11.16+, Bash, and Python 3.9+ with PyYAML available. Older npm works but warns `Unknown cli config "--allow-scripts"`. On Windows, run Bash scripts from Git Bash. In each command, use the absolute path to the generated marketplace.
 
 | Client | Install path to test |
 | --- | --- |

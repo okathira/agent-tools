@@ -28,7 +28,7 @@ zg を更新する場合は [zvec-grep.version](zvec-grep.version) を変更し�
 
 ## 任意のローカル導入テスト
 
-クリーンなプロファイルと別のテスト用リポジトリを使い、クライアントのバージョンと OS を記録します。Node.js 22 以上、npm/npx、Bash、PyYAML 入りの Python 3.9 以上を用意します。Windows では Git Bash から Bash スクリプトを実行してください。以下の `<marketplace-root>` は生成先の絶対パスです。
+クリーンなプロファイルと別のテスト用リポジトリを使い、クライアントのバージョンと OS を記録します。Node.js 22 以上、npm/npx 11.16 以上、Bash、PyYAML 入りの Python 3.9 以上を用意します。古い npm でも動きますが、`Unknown cli config "--allow-scripts"` の警告が出ます。Windows では Git Bash から Bash スクリプトを実行してください。以下の `<marketplace-root>` は生成先の絶対パスです。
 
 | クライアント | テストする導入方法 |
 | --- | --- |

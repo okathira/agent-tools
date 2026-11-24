@@ -2,6 +2,14 @@
 
 Newest date first. Each entry starts with the operation in bold, such as **Ingest**, **Record**, **Crystallize**, or **Lint**, and links the pages it changed.
 
+## 2026-11-23
+
+* **Record**: Fixed the open script issues and recorded them in [Gotchas](concepts/gotchas.md) and [skill setup](runbooks/skill-setup.md).
+  - The scripts write LF and `/`-separated paths on Windows. Bootstrap and the installer also accept `python`.
+  - Japanese sentence ends count without a following space. Lint warns about a description longer than one sentence.
+  - Index generation keeps the list marker of an existing index, so Prettier formatting does not trigger ZE010.
+  - `zg.sh` passes `--allow-scripts` only to npm 11.16+.
+
 ## 2026-11-21
 
 * **Record**: Repaired the [skill setup runbook](runbooks/skill-setup.md) code blocks and used the bundled launcher for index and status commands. Bootstrap guidance and migration instructions invoke the launcher with Bash.

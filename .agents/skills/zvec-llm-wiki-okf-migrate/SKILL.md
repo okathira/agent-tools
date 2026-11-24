@@ -9,7 +9,7 @@ license: MIT
 This skill converts a wiki written under the older zvec-llm-wiki page contract into the OKF bundle
 that `zvec-llm-wiki` now maintains. It needs these sibling skills in the same skills directory:
 `zvec-llm-wiki` (for `llm_wiki.py`), `okf-generate` (for `validate.py` and the writing rules), and
-Python 3.9+ with PyYAML.
+Python 3.9+ with PyYAML. On Windows, run the `python3` commands with `python` when `python3` is missing.
 
 Migration rewrites every page, so `generated.at` moves to the migration time and every concept
 becomes unverified. That is expected: the migration is where OKF trust starts. The last step asks a

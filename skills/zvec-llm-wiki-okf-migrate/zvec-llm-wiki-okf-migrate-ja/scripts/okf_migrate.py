@@ -53,6 +53,8 @@ SCHEME_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*:")
 ACTOR_RE = re.compile(r"^([^\s/:]+/\S+|[A-Za-z][A-Za-z0-9+.-]*:\S+)$")
 FENCE_RE = re.compile(r"^\s{0,3}(```|~~~)")
 HEADING_RE = re.compile(r"^(#{1,6})(\s+.*)$")
+INLINE_CODE_RE = re.compile(r"`[^`]*`")
+SENTENCE_END_RE = re.compile(r"(?<!\be\.g)(?<!\bi\.e)(?<!\betc)(?<!\bvs)(?<!\bcf)[.!?](?=\s|$)|[。！？]+(?![」』）)\]])")
 LOG_PREAMBLE = ("新しい日付が上。各 entry は **Ingest**、**Record**、**Crystallize**、**Lint** などの"
                 "操作名の太字で始め、変更したページへリンクする。")
 
@@ -133,6 +135,11 @@ def first_h1(path: Path) -> str | None:
     return None
 
 
+def count_sentences(text: str) -> int:
+    """Count sentence ends. 。！？ end a sentence without a following space."""
+    return len(SENTENCE_END_RE.findall(INLINE_CODE_RE.sub("", text)))
+
+
 def slug(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
 
@@ -152,7 +159,7 @@ class Migration:
         try:
             return path.resolve().relative_to(self.bundle).as_posix()
         except ValueError:
-            return os.path.relpath(path, self.repo)
+            return Path(os.path.relpath(path, self.repo)).as_posix()
 
     def inside(self, path: Path) -> bool:
         try:
@@ -169,7 +176,7 @@ class Migration:
             print(f"would write {self.rel(path)}")
             return
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(text, encoding="utf-8")
+        path.write_bytes(text.encode("utf-8"))  # LF on every OS
         print(f"wrote {self.rel(path)}")
 
     def move_tree(self, src: Path, dst: Path) -> None:
@@ -205,7 +212,7 @@ class Migration:
             if candidate.exists():
                 if self.inside(candidate):
                     return "/" + self.rel(candidate)
-                return os.path.relpath(candidate, page.parent)
+                return Path(os.path.relpath(candidate, page.parent)).as_posix()
         self.note(f"{self.rel(page)}: source {value!r} does not resolve; kept as written")
         return value
 
@@ -291,7 +298,7 @@ class Migration:
                 end = i + 1
             lead = [line.lstrip(">").strip() for line in lines[i:end]]
             text = " ".join(" ".join(lead).split())
-            sentences = len(re.findall(r"[.!?。](\s|$)", text))
+            sentences = count_sentences(text)
             one_sentence = sentences == 1 or (sentences == 0 and end == i + 1)
             if lead and take_lead and one_sentence and not re.search(r"\]\(|\[\[|\[\^", text):
                 del lines[i:end]
@@ -341,7 +348,7 @@ class Migration:
             new["title"] = title
         if description:
             new["description"] = description
-            if len(re.findall(r"[.!?。](\s|$)", description)) > 1:
+            if count_sentences(str(description)) > 1:
                 self.note(f"{rel}: shorten description to one sentence")
         else:
             self.note(f"{rel}: no lead line found; write a one-sentence description")
@@ -406,7 +413,7 @@ class Migration:
             "superseded_by": "/" + self.rel(new),
             "generated": {"by": self.actor, "at": self.now},
         }
-        link = os.path.relpath(new, old.parent)
+        link = urllib.parse.quote(Path(os.path.relpath(new, old.parent)).as_posix())
         self.write(old, f"---\n{emit_frontmatter(stub)}\n---\n\nこのページは移動した。[{title}]({link}) を参照する。\n")
 
     # -- log and root index --
@@ -508,7 +515,7 @@ def record_verification(path: Path, actor: str, at: str) -> None:
     else:
         old = lines[start].split(":", 1)[1].strip()
         lines[start:start + 1] = ["verified:", f"  - {old}", event]
-    path.write_text("\n".join(lines), encoding="utf-8")
+    path.write_bytes("\n".join(lines).encode("utf-8"))  # LF on every OS
     print(f"verified {path} by {actor}")
 
 
