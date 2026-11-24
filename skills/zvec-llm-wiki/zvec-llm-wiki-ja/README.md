@@ -64,7 +64,7 @@ Windows では Git Bash など POSIX シェルから実行する。
 
 ## 2. 対象リポジトリのブートストラップ
 
-作業中の **プロジェクト** から実行する（このカタログからではない）。**Node.js 22+** が必要 — zvec-grep にスタンドアロンバイナリはない。`llm_wiki.py` と `validate.py` には **PyYAML 入りの Python 3.9+**（`pip install pyyaml`）も必要。
+作業中の **プロジェクト** から実行する（このカタログからではない）。**Node.js 22+** が必要 — zvec-grep にスタンドアロンバイナリはない。`llm_wiki.py` と `validate.py` には **PyYAML 入りの Python 3.9+**（`pip install pyyaml`）も必要。Windows で `python3` が無いときは、この文書の `python3` を `python` に読み替える。npm は 11.16 より前の版でも動くが、`Unknown cli config "--allow-scripts"` の警告が出る。
 
 ```bash
 cd your-repo

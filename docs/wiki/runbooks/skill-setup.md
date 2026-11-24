@@ -9,7 +9,7 @@ x-zvec-aliases:
   - install.sh
   - incremental zg --index
   - project MCP
-generated: { by: "codex/gpt-6.2-sol", at: "2026-11-21T15:35:55Z" }
+generated: { by: "claude-code/claude-opus-5-5", at: "2026-11-23T06:15:56Z" }
 verified:
   - { by: "human:owner", at: "2026-11-20T15:31:00Z" }
 sources:
@@ -29,8 +29,8 @@ sources:
 
 # Prerequisites
 
-- Node.js 22+ for installation into other projects. For development and dogfooding in this repository, select the exact release in `.node-version` and install the version in `.npm-version`. For example, with the pinned Node active in your version manager, run `npm install -g npm@12.2.3` and check `npm --version`. CI installs npm into a temporary prefix, adds it to PATH, and verifies the pin.[^node-release-index][^npm-release]
-- Python 3.9+ with PyYAML (`pip3 install --user pyyaml`) for `llm_wiki.py` and `validate.py`
+- Node.js 22+ for installation into other projects. npm 11.16+ avoids an `Unknown cli config` warning for `--allow-scripts`; older npm still works. For development and dogfooding in this repository, select the exact release in `.node-version` and install the version in `.npm-version`. For example, with the pinned Node active in your version manager, run `npm install -g npm@12.2.3` and check `npm --version`. CI installs npm into a temporary prefix, adds it to PATH, and verifies the pin.[^node-release-index][^npm-release]
+- Python 3.9+ with PyYAML (`pip3 install --user pyyaml`) for `llm_wiki.py` and `validate.py`. On Windows, use `python` where `python3` is missing.
 - POSIX shell (Git Bash on Windows), plus `curl` and `tar` to fetch the OKF skills
 
 # 1. Install the skill (per repo; commit the result)

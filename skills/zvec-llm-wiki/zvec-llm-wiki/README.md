@@ -64,7 +64,7 @@ Restart your agent after installing.
 
 ## 2. Bootstrap a target repo
 
-Run from the **project** you are working in (not from this catalog). Requires **Node.js 22+** — zvec-grep has no standalone binary — and **Python 3.9+ with PyYAML** (`pip install pyyaml`) for `llm_wiki.py` and `validate.py`.
+Run from the **project** you are working in (not from this catalog). Requires **Node.js 22+** — zvec-grep has no standalone binary — and **Python 3.9+ with PyYAML** (`pip install pyyaml`) for `llm_wiki.py` and `validate.py`. On Windows, use `python` where these docs say `python3` if `python3` is missing. Use npm 11.16+ to avoid an `Unknown cli config "--allow-scripts"` warning; older npm still works.
 
 ```bash
 cd your-repo

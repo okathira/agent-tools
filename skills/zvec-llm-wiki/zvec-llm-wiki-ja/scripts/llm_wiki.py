@@ -49,7 +49,8 @@ ALIAS_KEY = "x-zvec-aliases"
 ALIAS_RANGE = (3, 6)
 
 LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
-ENTRY_RE = re.compile(r"^\*\s+\[([^\]]*)\]\(([^)\s]+)\)(?:\s+-\s+(.*))?$")
+ENTRY_RE = re.compile(r"^([*+-])\s+\[([^\]]*)\]\(([^)\s]+)\)(?:\s+-\s+(.*))?$")
+SENTENCE_END_RE = re.compile(r"(?<!\be\.g)(?<!\bi\.e)(?<!\betc)(?<!\bvs)(?<!\bcf)[.!?](?=\s|$)|[。！？]+(?![。！？」』）)\]])")
 SCHEME_RE = re.compile(r"^[a-zA-Z][a-zA-Z0-9+.-]*:")
 WIKILINK_RE = re.compile(r"\[\[[^\]]+\]\]")
 INLINE_CODE_RE = re.compile(r"`[^`]*`")
@@ -110,6 +111,11 @@ def one_line(value: Any) -> str:
     return " ".join(str(value).split()) if value else ""
 
 
+def count_sentences(text: str) -> int:
+    """Count sentence ends. 。！？ end a sentence without a following space."""
+    return len(SENTENCE_END_RE.findall(INLINE_CODE_RE.sub("", text)))
+
+
 class Bundle:
     def __init__(self, root: Path):
         self.root = root.resolve()
@@ -139,21 +145,28 @@ class Bundle:
 
 # ---- index generation (OKF section 8) --------------------------------------
 
-def existing_entries(index_path: Path) -> dict[str, tuple[str, str]]:
+def existing_entries(index_path: Path) -> tuple[dict[str, tuple[str, str]], str]:
+    """Read the entries of an existing index and the list marker it uses.
+
+    Formatters such as Prettier rewrite `*` to `-`; keeping the marker found in the file
+    lets a formatted index stay current (ZE010) without fighting the formatter.
+    """
     entries: dict[str, tuple[str, str]] = {}
+    marker = ""
     if not index_path.is_file():
-        return entries
+        return entries, "*"
     for line in index_path.read_text(encoding="utf-8").split("\n"):
         match = ENTRY_RE.match(line.strip())
         if match:
-            title, target, description = match.group(1), match.group(2), match.group(3) or ""
+            marker = marker or match.group(1)
+            title, target, description = match.group(2), match.group(3), match.group(4) or ""
             key = target[:-len("index.md")] if target.endswith("/index.md") else target
             entries[key] = (title, description.strip())
-    return entries
+    return entries, marker or "*"
 
 
-def entry(title: str, target: str, description: str) -> str:
-    return f"* [{title}]({target})" + (f" - {description}" if description else "")
+def entry(title: str, target: str, description: str, marker: str = "*") -> str:
+    return f"{marker} [{title}]({target})" + (f" - {description}" if description else "")
 
 
 def has_content(bundle: Bundle, directory: Path) -> bool:
@@ -168,7 +181,7 @@ def has_content(bundle: Bundle, directory: Path) -> bool:
 
 def build_index(bundle: Bundle, directory: Path) -> str:
     index_path = directory / "index.md"
-    old_entries = existing_entries(index_path)
+    old_entries, marker = existing_entries(index_path)
     is_root = directory.resolve() == bundle.root
     lines: list[str] = []
 
@@ -192,7 +205,7 @@ def build_index(bundle: Bundle, directory: Path) -> str:
         key = f"{sub.name}/"
         default_title, default_description = DEFAULT_DIRS.get(sub.name, (sub.name.replace("-", " ").title(), ""))
         title, description = old_entries.get(key, (default_title, default_description))
-        items.append(entry(title or default_title, f"{sub.name}/index.md", description or default_description))
+        items.append(entry(title or default_title, f"{sub.name}/index.md", description or default_description, marker))
 
     for path in bundle.markdown_files(directory):
         if path.name in ("index.md", "log.md"):
@@ -202,11 +215,11 @@ def build_index(bundle: Bundle, directory: Path) -> str:
             continue
         title = one_line(doc.meta.get("title")) or path.stem
         description = one_line(doc.meta.get("description"))
-        items.append(entry(title, urllib.parse.quote(path.name), description))
+        items.append(entry(title, urllib.parse.quote(path.name), description, marker))
 
     if (directory / "log.md").is_file():
         title, description = old_entries.get("log.md", DEFAULT_LOG)
-        items.append(entry(title or DEFAULT_LOG[0], "log.md", description or DEFAULT_LOG[1]))
+        items.append(entry(title or DEFAULT_LOG[0], "log.md", description or DEFAULT_LOG[1], marker))
 
     lines += items
     return "\n".join(lines).rstrip("\n") + "\n"
@@ -232,7 +245,7 @@ def cmd_index(bundle: Bundle, check: bool) -> int:
             stale += 1
             print(f"{bundle.rel(index_path) if index_path.exists() else bundle.rel(directory) + '/index.md'}: error ZE010 index.md is not up to date; run llm_wiki.py index")
         else:
-            index_path.write_text(content, encoding="utf-8")
+            index_path.write_bytes(content.encode("utf-8"))  # LF on every OS
             print(f"wrote {bundle.rel(index_path)}")
     for directory in bundle.walk_dirs():
         if directory.resolve() != bundle.root and (directory / "index.md").is_file() and not has_content(bundle, directory):
@@ -279,8 +292,11 @@ class Linter:
         if meta.get("status") in ("working", "decided", "proposed", "accepted", "superseded"):
             self.report(doc.path, 1, "error", "ZE032", f"pre-OKF status {meta.get('status')!r}; use draft, deprecated, or omit for stable")
 
-        if not one_line(meta.get("description")):
+        description = one_line(meta.get("description"))
+        if not description:
             self.report(doc.path, 1, "warning", "ZW033", "add a one-sentence description; indexes copy it")
+        elif count_sentences(description) > 1:
+            self.report(doc.path, 1, "warning", "ZW038", f"description has {count_sentences(description)} sentences; keep one and move the rest to the body")
         if "generated" not in meta:
             self.report(doc.path, 1, "warning", "ZW034", "add generated: { by, at } when an agent writes or changes meaning")
 

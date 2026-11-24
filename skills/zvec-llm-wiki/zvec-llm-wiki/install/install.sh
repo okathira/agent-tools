@@ -147,7 +147,9 @@ else
   fi
 fi
 
-if ! python3 -c 'import yaml' >/dev/null 2>&1; then
+# Windows often has python but not python3.
+if ! python3 -c 'import sys, yaml; sys.exit(sys.version_info < (3, 9))' >/dev/null 2>&1 \
+  && ! python -c 'import sys, yaml; sys.exit(sys.version_info < (3, 9))' >/dev/null 2>&1; then
   echo "warning: Python 3.9+ with PyYAML is required for the wiki scripts and validate.py (pip install pyyaml)" >&2
 fi
 
