@@ -6,6 +6,7 @@ description: Decisions and procedures for maintaining the Agent Tools catalog an
 
 # Agent Tools repository wiki
 
+* [Analyses](analyses/index.md) - Syntheses and crystallized answers.
 * [Concepts](concepts/index.md) - Terms, patterns, rules, and ideas.
 * [Decisions](decisions/index.md) - Architecture decision records.
 * [Runbooks](runbooks/index.md) - Repeatable procedures.

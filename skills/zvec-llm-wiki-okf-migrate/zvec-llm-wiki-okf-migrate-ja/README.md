@@ -4,6 +4,10 @@
 [Open Knowledge Format（OKF）v0.3](https://github.com/open-knowledge-format/open-knowledge-format/blob/main/SPEC.md)
 の bundle へ移行し、人による確認を経て承認を記録する [Agent Skill](https://agentskills.io/)。
 
+> **非推奨。** `zvec-llm-wiki-ja` と同じく、zvec-grep が日本語の全文検索に対応するまでの措置。
+> 既存の wiki の移行には引き続き使える。
+> 詳細: [Japanese retrieval with zvec-grep](https://github.com/okathira/agent-tools/blob/main/docs/wiki/analyses/japanese-retrieval.md)（英語）
+
 一度だけ使う道具なので、日常の `zvec-llm-wiki-ja` スキルを小さく保つために分けている。
 
 ## レイアウト

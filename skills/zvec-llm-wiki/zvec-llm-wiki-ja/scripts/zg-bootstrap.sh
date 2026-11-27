@@ -229,6 +229,8 @@ ensure_persistent_zg() {
   fi
 }
 
+warn "zvec-llm-wiki-ja と日本語で書く wiki は、zvec-grep が日本語の全文検索に対応するまで非推奨です。詳細: https://github.com/okathira/agent-tools/blob/main/docs/wiki/analyses/japanese-retrieval.md"
+
 # 1) Node.js 22+ の確認 -------------------------------------------------------
 if ! command -v node >/dev/null 2>&1; then
   echo "zvec-grep の実行には Node.js 22+ が必要です。先に Node をインストールしてください。" >&2

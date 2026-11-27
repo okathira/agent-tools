@@ -3,6 +3,14 @@
 [Agent Skill](https://agentskills.io/) で、**zvec-grep（`zg`）** を使ってプロジェクトの
 **LLM 向け wiki**（`docs/wiki/`）を ingest、query、lint、record、crystallize する。
 
+> **このスキルと、日本語で書く wiki は非推奨。** zvec-grep が日本語の全文検索に対応するまでの措置。
+> zg 0.3.1 は全文検索のトークナイザーが中国語用の jieba に固定されていて、日本語の語を取りこぼしたり、
+> かな 1 文字の一致で誤ヒットしたりする。日本語と英語に最適化したエンジンの llm-wiki を別スキルとして
+> 作る予定で、このスキルからの移行スキルも作る。それまで日本語の wiki では、語句そのものは
+> `zg.sh --rg -F` で、概念はハイブリッド検索か `--vector` で探す。`--fts` は英数字の識別子 1 語に限り、
+> 日本語の名前は `x-zvec-aliases` に入れる。
+> 詳細: [Japanese retrieval with zvec-grep](https://github.com/okathira/agent-tools/blob/main/docs/wiki/analyses/japanese-retrieval.md)（英語）
+
 コアループ: **Query → Work → Ingest/Record/Crystallize → Lint → 増分 `zg.sh --index`**。
 書き込みは involved: ページ計画を示し、ユーザーが止めなければ編集する。index の再構築や削除は
 通常操作で、zg が何をどう索引するかを変える操作は引き続き承認必須。

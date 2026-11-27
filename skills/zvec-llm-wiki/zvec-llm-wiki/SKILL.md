@@ -6,6 +6,14 @@ license: MIT
 
 # Maintaining an OKF LLM wiki with zvec-grep
 
+> **Japanese-language wikis are deprecated** until zvec-grep supports Japanese full-text search.
+> zg 0.3.1 fixes its full-text tokenizer to jieba, a Chinese segmenter, so keyword search misses
+> Japanese terms and matches single kana. A separate llm-wiki skill on an engine optimized for
+> Japanese and English is planned, with a skill that migrates wikis from this one. Until then, on a Japanese
+> wiki: find exact Japanese words with `zg.sh --rg -F`, find concepts with hybrid or `--vector`
+> search, keep `--fts` to single ASCII identifiers, and list Japanese names in `x-zvec-aliases`.
+> Details: [Japanese retrieval with zvec-grep](https://github.com/okathira/agent-tools/blob/main/docs/wiki/analyses/japanese-retrieval.md).
+
 ## Overview
 
 Run `docs/wiki/` as a living, compounding knowledge system shared by people and agents. The wiki

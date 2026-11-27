@@ -1,7 +1,7 @@
 ---
 name: zvec-llm-wiki-okf-migrate-ja
 description: >-
-  OKF 以前の zvec-llm-wiki の wiki（type キーの無い docs/wiki/ のページ、status の working/decided、aliases、
+  非推奨（zvec-grep が日本語の全文検索に対応するまで）。OKF 以前の zvec-llm-wiki の wiki（type キーの無い docs/wiki/ のページ、status の working/decided、aliases、
   source、ADR の date/deciders、`## [date] kind | title` 形式の log）を Open Knowledge Format v0.3 の bundle へ
   一度だけ移行し、最後に人のレビューで承認を記録する。LLM wiki を OKF へ移行・変換・更新するよう頼まれたとき、
   または zvec-llm-wiki-ja の lint が OKF 以前のキーを報告したときに使う。日常の wiki 編集には使わない。
@@ -9,6 +9,10 @@ license: MIT
 ---
 
 # LLM wiki を OKF v0.3 へ移行する
+
+> **非推奨。** `zvec-llm-wiki-ja` と同じく、zvec-grep が日本語の全文検索に対応するまでの措置。
+> 既存の wiki の移行には引き続き使える。
+> 詳細: [Japanese retrieval with zvec-grep](https://github.com/okathira/agent-tools/blob/main/docs/wiki/analyses/japanese-retrieval.md)（英語）
 
 このスキルは、旧来の zvec-llm-wiki のページ契約で書かれた wiki を、`zvec-llm-wiki-ja` が今維持している
 OKF bundle へ変換する。同じスキルディレクトリに次の兄弟スキルが必要: `zvec-llm-wiki-ja`

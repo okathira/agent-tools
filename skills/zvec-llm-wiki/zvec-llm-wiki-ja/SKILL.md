@@ -1,13 +1,21 @@
 ---
 name: zvec-llm-wiki-ja
 description: >-
-  zvec-grep (zg) でプロジェクトの LLM wiki (docs/wiki/、Open Knowledge Format (OKF) v0.3 の bundle) を
+  非推奨（zvec-grep が日本語の全文検索に対応するまで）。zvec-grep (zg) でプロジェクトの LLM wiki (docs/wiki/、Open Knowledge Format (OKF) v0.3 の bundle) を
   ingest、query、lint、record、crystallize する。LLM wiki、living docs、ナレッジベース、wiki 整備、
   summaries、entities、concepts、analyses、ADR、runbooks で使う。Web 検索や wiki 以外の Markdown には使わない。
 license: MIT
 ---
 
 # zvec-grep による OKF LLM wiki の維持
+
+> **このスキルと、日本語で書く wiki は非推奨。** zvec-grep が日本語の全文検索に対応するまでの措置。
+> zg 0.3.1 は全文検索のトークナイザーが中国語用の jieba に固定されていて、日本語の語を取りこぼしたり、
+> かな 1 文字の一致で誤ヒットしたりする。日本語と英語に最適化したエンジンの llm-wiki を別スキルとして
+> 作る予定で、このスキルからの移行スキルも作る。それまで日本語の wiki では、語句そのものは
+> `zg.sh --rg -F` で、概念はハイブリッド検索か `--vector` で探す。`--fts` は英数字の識別子 1 語に限り、
+> 日本語の名前は `x-zvec-aliases` に入れる。
+> 詳細: [Japanese retrieval with zvec-grep](https://github.com/okathira/agent-tools/blob/main/docs/wiki/analyses/japanese-retrieval.md)（英語）
 
 ## 概要
 

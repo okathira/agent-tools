@@ -8,8 +8,10 @@ Codex、Claude Code、Cursor、OpenCode 向けのスキルと、Wiki の検索�
 
 | スキル | できること | English |
 |--------|------------|---------|
-| [zvec-llm-wiki-ja](skills/zvec-llm-wiki/zvec-llm-wiki-ja/) | ソース・設計知識・プロジェクト文脈を生きた [OKF](https://github.com/open-knowledge-format/open-knowledge-format) の wiki に編纂し、段階的検索に [zvec-grep](https://github.com/zvec-ai/zvec-grep) を使う | [zvec-llm-wiki](skills/zvec-llm-wiki/zvec-llm-wiki/) |
-| [zvec-llm-wiki-okf-migrate-ja](skills/zvec-llm-wiki-okf-migrate/zvec-llm-wiki-okf-migrate-ja/) | OKF 以前の zvec-llm-wiki の wiki を OKF v0.3 へ一度だけ移行し、最後に人がレビューする | [zvec-llm-wiki-okf-migrate](skills/zvec-llm-wiki-okf-migrate/zvec-llm-wiki-okf-migrate/) |
+| [zvec-llm-wiki-ja](skills/zvec-llm-wiki/zvec-llm-wiki-ja/)（非推奨） | ソース・設計知識・プロジェクト文脈を生きた [OKF](https://github.com/open-knowledge-format/open-knowledge-format) の wiki に編纂し、段階的検索に [zvec-grep](https://github.com/zvec-ai/zvec-grep) を使う | [zvec-llm-wiki](skills/zvec-llm-wiki/zvec-llm-wiki/) |
+| [zvec-llm-wiki-okf-migrate-ja](skills/zvec-llm-wiki-okf-migrate/zvec-llm-wiki-okf-migrate-ja/)（非推奨） | OKF 以前の zvec-llm-wiki の wiki を OKF v0.3 へ一度だけ移行し、最後に人がレビューする | [zvec-llm-wiki-okf-migrate](skills/zvec-llm-wiki-okf-migrate/zvec-llm-wiki-okf-migrate/) |
+
+日本語版のスキルと、日本語で書く wiki は、zvec-grep が日本語の全文検索に対応するまで非推奨です。日本語と英語に最適化したエンジンの llm-wiki を別に作る予定です。詳しくは [Japanese retrieval with zvec-grep](docs/wiki/analyses/japanese-retrieval.md)（英語）を参照してください。
 
 ## スキルの使い方
 

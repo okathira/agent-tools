@@ -19,7 +19,7 @@ SCHEMAS = "https://agent-plugins.org/schemas/1.0.0"
 OKF_SKILLS = ("okf-generate", "okf-consume")
 LOCALES = {
     "zvec-llm-wiki": "Maintain and search an Open Knowledge Format wiki with zvec-grep.",
-    "zvec-llm-wiki-ja": "zvec-grep で Open Knowledge Format の Wiki を検索・メンテナンスします。",
+    "zvec-llm-wiki-ja": "（非推奨）zvec-grep で Open Knowledge Format の Wiki を検索・メンテナンスします。",
 }
 ZG_LAUNCHERS = [SOURCE / name / "scripts/zg.sh" for name in LOCALES] + [
     REPO / ".agents/skills/zvec-llm-wiki/scripts/zg.sh"
