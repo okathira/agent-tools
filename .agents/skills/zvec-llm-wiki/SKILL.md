@@ -58,7 +58,9 @@ external. Never use `[[wikilinks]]`.
 ### Query
 
 1. Read `docs/wiki/index.md`, then only the directory indexes the task needs.
-2. If indexes are insufficient, use zg hybrid search scoped to `docs/wiki/**`.
+2. If indexes are insufficient, use zg hybrid search scoped to `docs/wiki/**`. Give extra `fts` terms
+   one word each: zg 0.3.1 indexes spaces as tokens, so a multi-word `fts` term matches any text
+   with a space.
 3. For a known name, path, alias, or Japanese proper noun, use zg managed rg (or native `rg`).
 4. Widen to `docs/raw/**` or code only when wiki evidence is insufficient.
 5. Stop when ranked evidence is enough. Report trust, status, and staleness as `okf-consume` says;

@@ -61,7 +61,8 @@ ingest 前に Markdown へ変換し、その Markdown は `docs/raw/` に置く�
 ### Query
 
 1. `docs/wiki/index.md` を読み、タスクに関係するディレクトリの index だけを読む。
-2. index で足りなければ、`docs/wiki/**` にスコープした zg hybrid 検索を使う。
+2. index で足りなければ、`docs/wiki/**` にスコープした zg hybrid 検索を使う。追加の `fts` 語は 1 語ずつ
+   渡す。zg 0.3.1 は空白もトークンとして索引するので、複数語の `fts` 語は空白を含むあらゆる文に当たる。
 3. 既知の名前、パス、alias、日本語の固有名詞には zg managed rg（または native `rg`）を使う。
 4. wiki の証拠が不足するときだけ `docs/raw/**` またはコードへ広げる。
 5. ランク付けされた証拠が十分なら止める。`okf-consume` に従い信頼度、status、鮮度を報告し、
