@@ -9,7 +9,7 @@ x-zvec-aliases:
   - heading-only stubs
   - MCP zg PATH
   - stale skill install
-generated: { by: "claude-code/claude-opus-5-5", at: "2026-11-23T06:15:56Z" }
+generated: { by: "claude-code/claude-opus-5-5", at: "2026-11-27T18:36:06Z" }
 verified:
   - { by: "human:owner", at: "2026-11-20T15:31:00Z" }
 sources:
@@ -25,6 +25,9 @@ sources:
   - id: zg-sh
     resource: ../../../skills/zvec-llm-wiki/zvec-llm-wiki/scripts/zg.sh
     title: zvec-llm-wiki pinned zg launcher
+  - id: issue-11
+    resource: https://github.com/okathira/agent-tools/issues/11
+    title: "Issue #11: worktrees start without a zvec-grep index"
 ---
 
 # Do not commit `.zvec-grep/`
@@ -82,6 +85,14 @@ Windows often has `python` but no working `python3`. Run the documented `python3
 
 npm 11.16 added the `--allow-scripts` config. Older npm runs install scripts by default and prints `Unknown cli config "--allow-scripts"` for the flag. The bundled `zg.sh` passes the flag only to npm 11.16+.[^zg-sh] The committed MCP entries keep it for teammates on newer npm, so an older npm still prints the warning there. Bootstrap warns once when it finds such an npm.
 
+# Drop an index before deleting its directory on Windows
+
+On Windows, `git worktree remove --force` can fail with `Invalid argument` while zg holds a large index open. Run `zg.sh --index <root> --drop` first; the directory then deletes.[^issue-11]
+
+# Incremental updates can drift from a fresh index
+
+An index updated many times can rank results differently from a fresh build of the same files. In one test on this catalog, a Japanese query shared 1 of its top 10 hits with a fresh build, while fresh builds matched each other exactly. The cause is not yet known. Measure retrieval quality on a fresh index, and rebuild when results look off.[^issue-11]
+
 # Japanese retrieval needs aliases
 
 Do not assume BM25 tokenization handles Japanese proper nouns. On a Japanese wiki, keep Kanji, Kana, and English names in frontmatter `x-zvec-aliases` on the owning page and use exact rg when a name is known.
@@ -98,5 +109,6 @@ This catalog wiki is English. Prefer English ubiquitous-language aliases; see [C
 [^llm-wiki-py]: zvec-llm-wiki index and lint script
 [^okf-migrate-py]: zvec-llm-wiki OKF migration script
 [^zg-sh]: zvec-llm-wiki pinned zg launcher
+[^issue-11]: Issue #11: worktrees start without a zvec-grep index
 
 Use the installed wiki skill's `scripts/zg.sh` from the target repository to keep index commands on the project MCP version. If a different `zg` is on PATH, the launcher uses the pinned npm package. User-level bootstrap requires the matching binary on PATH because user-level MCP launches `zg` directly.

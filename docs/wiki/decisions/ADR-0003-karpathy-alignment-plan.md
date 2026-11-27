@@ -39,7 +39,7 @@ Search-engine candidates were qmd (gist-named, Markdown RAG) vs zg (this skill's
 3. **Shape those operations around zg's retrieval journey**, instead of treating zg as a drop-in qmd.
 4. **Layers:** executable **code is raw** (do not compile the tree into wiki). **Living documents live in the wiki** (one home). Imported dumps (transcripts, third-party specs, PDF→md) may sit in `docs/raw/`, outside the bundle, and are ingested; they are not a second copy of the same fact. Existing living `.md` in the repo **moves** into `docs/wiki/` (re-filed by kind), it is not duplicated. Human landing pages (this catalog's README.md / README.ja.md) may stay outside as installer UI. The page format for these layers is [ADR-0005](ADR-0005-okf-alignment.md).[^adr-0005]
 5. **Dogfood:** this catalog wiki migrates with the skill rewrite. Change size is acceptable (personal project).
-6. **No strict write-lock.** Wiki writes are **involved** only: show the plan, then edit in the same turn unless the user stops. Quality is ingest-small + lint + git, not a mutex. `--rebuild` / `--drop` / `--reset-paths` on the zg index stay confirmation-gated (index lifecycle, not wiki text).
+6. **No strict write-lock.** Wiki writes are **involved** only: show the plan, then edit in the same turn unless the user stops. Quality is ingest-small + lint + git, not a mutex. `--rebuild` / `--drop` / `--reset-paths` on the zg index stay confirmation-gated (index lifecycle, not wiki text). [ADR-0006](ADR-0006-index-lifecycle-routine.md) proposes making rebuild and drop routine.
 
 # Why zg (including the 2026-08-28 post)
 
@@ -113,7 +113,7 @@ Put retrieval names in frontmatter `x-zvec-aliases` on the owning page (not only
 
 ## Index lifecycle stays CLI-owned
 
-Unchanged guardrail: incremental `zg index` after wiki edits is routine. `--rebuild` / `--drop` / `--reset-paths` need confirmation. Skill does not assume MCP index tools exist.
+Unchanged guardrail: incremental `zg index` after wiki edits is routine. `--rebuild` / `--drop` / `--reset-paths` need confirmation; [ADR-0006](ADR-0006-index-lifecycle-routine.md) proposes relaxing rebuild and drop. Skill does not assume MCP index tools exist.
 
 After ingest, prefer waiting for a fresh index before the next query (`zg status` / freshness) so the agent does not search the pre-ingest snapshot.
 
@@ -176,7 +176,7 @@ Karpathy: the LLM writes the wiki; the human sources, reads summaries, and steer
 
 **involved:** show pages (and zg spans when useful), then write unless the user interrupts.
 
-**Not a wiki lock:** zg `--rebuild` / `--drop` / `--reset-paths` still need explicit confirmation.
+**Not a wiki lock:** zg `--rebuild` / `--drop` / `--reset-paths` still need explicit confirmation (see [ADR-0006](ADR-0006-index-lifecycle-routine.md)).
 
 # Consequences
 

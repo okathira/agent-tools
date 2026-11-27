@@ -21,8 +21,8 @@ This skill owns the loop and the llm-wiki extensions. The official sibling skill
 - **`okf-consume`** — how to judge trust tier, status, freshness, and conflicts when answering.
 
 Wiki writes are **involved**: show the pages and intended changes, then edit in the same turn
-unless the user stops you. Keep changes small and evidence-linked. Only destructive index
-operations require prior approval.
+unless the user stops you. Keep changes small and evidence-linked. Index lifecycle operations
+are routine; only changes to what or how zg indexes need prior approval.
 
 ## Wiki structure
 
@@ -122,7 +122,12 @@ The script scaffolds an OKF bundle only when
 updates one index. An existing wiki is untouched. A wiki without `type` frontmatter predates OKF:
 use the `zvec-llm-wiki-okf-migrate` skill.
 
-Never run `--rebuild`, `--drop`, or `--reset-paths` without explicit user approval.
+Incremental `--index`, `--rebuild`, and `--drop` on the target project's index are routine: the
+index lives in the gitignored `.zvec-grep/` and can be rebuilt from the working tree. Ask first
+before changing what or how it indexes (`--reset-paths`, scan globs, or the embedding model),
+before using a remote embedding provider, and before indexing a root outside the target project.
+On Windows, run `zg.sh --index <root> --drop` before deleting a worktree or directory whose index
+zg holds open; otherwise the deletion can fail.
 
 For a plugin install, pass `--skip-mcp` from the target project's root so the plugin owns the
 MCP connection. Pass the target project's absolute path as `root` when using MCP search.

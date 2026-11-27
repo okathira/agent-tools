@@ -2,6 +2,11 @@
 
 Newest date first. Each entry starts with the operation in bold, such as **Ingest**, **Record**, **Crystallize**, or **Lint**, and links the pages it changed.
 
+## 2026-11-28
+
+* **Record**: Proposed [ADR-0006](decisions/ADR-0006-index-lifecycle-routine.md): rebuilding or dropping the project's own index no longer needs approval. Updated [Conventions](concepts/conventions.md) and [ADR-0003](decisions/ADR-0003-karpathy-alignment-plan.md) to point to it.
+* **Record**: Added two index sharp edges to [Gotchas](concepts/gotchas.md): drop before deleting on Windows, and drift after many incremental updates.
+
 ## 2026-11-23
 
 * **Record**: Fixed the open script issues and recorded them in [Gotchas](concepts/gotchas.md) and [skill setup](runbooks/skill-setup.md).

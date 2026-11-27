@@ -50,7 +50,7 @@ Query is staged:
 - If they are insufficient, use zg hybrid search scoped to `docs/wiki/**`.
 - Use exact rg for known names and aliases; widen to `docs/raw/` or code only if wiki evidence is insufficient.
 
-Ingest, record, crystallize, and lint use involved writes: show the pages, then write unless the user stops the operation. There is no strict page write-lock. `zg index --rebuild`, `--drop`, and `--reset-paths` still require explicit confirmation. Preserve rejected or superseded ideas instead of deleting their history.
+Ingest, record, crystallize, and lint use involved writes: show the pages, then write unless the user stops the operation. There is no strict page write-lock. Rebuilding or dropping the project's own zg index is routine; changing what or how it indexes still needs confirmation ([ADR-0006](../decisions/ADR-0006-index-lifecycle-routine.md)). Preserve rejected or superseded ideas instead of deleting their history.
 
 # Format and page shape
 

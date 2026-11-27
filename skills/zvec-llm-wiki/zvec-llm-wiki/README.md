@@ -4,8 +4,8 @@ An [Agent Skill](https://agentskills.io/) for ingesting, querying, linting, reco
 crystallizing a project's **LLM-facing wiki** (`docs/wiki/`) with **zvec-grep (`zg`)**.
 
 Core loop: **Query → Work → Ingest/Record/Crystallize → Lint → incremental `zg.sh --index`**.
-Writes are involved: show the page plan, then edit unless the user stops. Destructive index
-operations remain approval-gated.
+Writes are involved: show the page plan, then edit unless the user stops. Index rebuilds and
+drops are routine; changes to what or how zg indexes remain approval-gated.
 
 The wiki is an [Open Knowledge Format (OKF) v0.3](https://github.com/open-knowledge-format/open-knowledge-format/blob/main/SPEC.md)
 bundle. The official `okf-generate` and `okf-consume` skills own the format, validation, and trust

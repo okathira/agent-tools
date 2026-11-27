@@ -28,8 +28,9 @@ zg is the only search engine. There is no qmd integration, second index, or stri
    frontmatter.
 4. Writes are involved: show the page plan and evidence, then edit unless the user stops.
 5. Contradictions stay visible and isolated; replaced pages stay as `deprecated` with `superseded_by`.
-6. Incremental `zg.sh --index` is routine. `--rebuild`, `--drop`, and `--reset-paths` require explicit
-   approval.
+6. Incremental `zg.sh --index`, `--rebuild`, and `--drop` on the project's own index are routine.
+   Changing the scan scope (`--reset-paths`, globs) or embedding model, using remote embedding, or
+   indexing a root outside the project requires explicit approval.
 
 ## Page contract (llm-wiki additions to OKF)
 
