@@ -93,9 +93,9 @@ On Windows, `git worktree remove --force` can fail with `Invalid argument` becau
 
 An index updated many times can rank results differently from a fresh build of the same files. In one test on this catalog, a Japanese query shared 1 of its top 10 hits with a fresh build, while fresh builds matched each other exactly. The cause is not yet known. Measure retrieval quality on a fresh index, and rebuild when results look off.[^issue-11]
 
-# Japanese retrieval needs aliases
+# Japanese retrieval is unreliable
 
-Do not assume BM25 tokenization handles Japanese proper nouns. On a Japanese wiki, keep Kanji, Kana, and English names in frontmatter `x-zvec-aliases` on the owning page and use exact rg when a name is known.
+zg 0.3.1 tokenizes full text with jieba, a Chinese segmenter, so keyword search misses Japanese terms and matches single kana. Japanese-language wikis are deprecated until zvec-grep supports Japanese full-text search ([ADR-0007](../decisions/ADR-0007-deprecate-japanese.md)); see [Japanese retrieval with zvec-grep](../analyses/japanese-retrieval.md) for measurements and workarounds. On an existing Japanese wiki, keep Kanji, Kana, and English names in frontmatter `x-zvec-aliases` on the owning page and use exact rg when a name is known.
 
 This catalog wiki is English. Prefer English ubiquitous-language aliases; see [Conventions](conventions.md).
 

@@ -1,13 +1,21 @@
 ---
 name: zvec-llm-wiki-ja
 description: >-
-  zvec-grep (zg) でプロジェクトの LLM wiki (docs/wiki/、Open Knowledge Format (OKF) v0.3 の bundle) を
+  非推奨（zvec-grep が日本語の全文検索に対応するまで）。zvec-grep (zg) でプロジェクトの LLM wiki (docs/wiki/、Open Knowledge Format (OKF) v0.3 の bundle) を
   ingest、query、lint、record、crystallize する。LLM wiki、living docs、ナレッジベース、wiki 整備、
   summaries、entities、concepts、analyses、ADR、runbooks で使う。Web 検索や wiki 以外の Markdown には使わない。
 license: MIT
 ---
 
 # zvec-grep による OKF LLM wiki の維持
+
+> **このスキルと、日本語で書く wiki は非推奨。** zvec-grep が日本語の全文検索に対応するまでの措置。
+> zg 0.3.1 は全文検索のトークナイザーが中国語用の jieba に固定されていて、日本語の語を取りこぼしたり、
+> かな 1 文字の一致で誤ヒットしたりする。日本語と英語に最適化したエンジンの llm-wiki を別スキルとして
+> 作る予定で、このスキルからの移行スキルも作る。それまで日本語の wiki では、語句そのものは
+> `zg.sh --rg -F` で、概念はハイブリッド検索か `--vector` で探す。`--fts` は英数字の識別子 1 語に限り、
+> 日本語の名前は `x-zvec-aliases` に入れる。
+> 詳細: [Japanese retrieval with zvec-grep](https://github.com/okathira/agent-tools/blob/main/docs/wiki/analyses/japanese-retrieval.md)（英語）
 
 ## 概要
 
@@ -53,7 +61,9 @@ ingest 前に Markdown へ変換し、その Markdown は `docs/raw/` に置く�
 ### Query
 
 1. `docs/wiki/index.md` を読み、タスクに関係するディレクトリの index だけを読む。
-2. index で足りなければ、`docs/wiki/**` にスコープした zg hybrid 検索を使う。
+2. index で足りなければ、`docs/wiki/**` にスコープした zg hybrid 検索を使う。追加の `fts` には空白を
+   含まない 1 語だけを渡す。zg 0.3.1 は空白もトークンとして索引するので、空白を含む `fts` は空白のある
+   あらゆる文に当たる。
 3. 既知の名前、パス、alias、日本語の固有名詞には zg managed rg（または native `rg`）を使う。
 4. wiki の証拠が不足するときだけ `docs/raw/**` またはコードへ広げる。
 5. ランク付けされた証拠が十分なら止める。`okf-consume` に従い信頼度、status、鮮度を報告し、

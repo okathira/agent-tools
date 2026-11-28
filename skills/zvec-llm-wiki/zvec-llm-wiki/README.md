@@ -3,6 +3,10 @@
 An [Agent Skill](https://agentskills.io/) for ingesting, querying, linting, recording, and
 crystallizing a project's **LLM-facing wiki** (`docs/wiki/`) with **zvec-grep (`zg`)**.
 
+> **Japanese-language wikis are deprecated** until zvec-grep supports Japanese full-text search.
+> A separate llm-wiki skill on an engine optimized for Japanese and English is planned.
+> See [Japanese retrieval with zvec-grep](https://github.com/okathira/agent-tools/blob/main/docs/wiki/analyses/japanese-retrieval.md).
+
 Core loop: **Query → Work → Ingest/Record/Crystallize → Lint → incremental `zg.sh --index`**.
 Writes are involved: show the page plan, then edit unless the user stops. Index rebuilds and
 drops are routine; changes to what or how zg indexes remain approval-gated.

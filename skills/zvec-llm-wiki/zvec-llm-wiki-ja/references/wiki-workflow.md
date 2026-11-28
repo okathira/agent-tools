@@ -96,7 +96,8 @@ OKF の `tags` は横断的な分類なので、alias を入れない。
 ## 段階的 query
 
 1. `docs/wiki/index.md` を読み、タスクに関係するディレクトリの index を読む。
-2. index で足りなければ、`docs/wiki/**` にスコープした zg hybrid 検索を使う。
+2. index で足りなければ、`docs/wiki/**` にスコープした zg hybrid 検索を使う。追加の `fts` には空白を
+   含まない 1 語だけを渡す。
 3. 既知の名前、alias、path、日本語固有名詞には zg managed rg（または native rg）を使う。
 4. wiki の証拠が不足した後だけ `docs/raw/**` またはコードへ広げる。
 5. 証拠が十分なら止める。`okf-consume` の信頼度、status、鮮度、矛盾の規則を適用する。

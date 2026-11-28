@@ -48,7 +48,7 @@ The one-time migration skill installs the same way: `sh skills/zvec-llm-wiki-okf
 - **User-wide** (all repos on one machine): add `--user` → `~/.agents/skills/`.
 - **Claude Code native path**: add `--claude` → `.claude/skills/` (same scope as default or `--user`).
 
-Japanese locale:
+Japanese locale (deprecated until zvec-grep supports Japanese full-text search; see [ADR-0007](../decisions/ADR-0007-deprecate-japanese.md)):
 
 ```bash
 sh skills/zvec-llm-wiki/zvec-llm-wiki-ja/install/install.sh --force

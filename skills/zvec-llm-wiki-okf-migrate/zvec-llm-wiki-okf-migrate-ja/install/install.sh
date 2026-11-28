@@ -92,4 +92,5 @@ else
   fi
 fi
 
+echo "警告: このパッケージと日本語で書く wiki は、zvec-grep が日本語の全文検索に対応するまで非推奨です。詳細: https://github.com/okathira/agent-tools/blob/main/docs/wiki/analyses/japanese-retrieval.md" >&2
 echo "完了。スキルを読み込むためエージェントを再起動してください。"
