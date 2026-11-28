@@ -9,7 +9,7 @@ x-zvec-aliases:
   - install.sh
   - incremental zg --index
   - project MCP
-generated: { by: "claude-code/claude-opus-5-5", at: "2026-11-23T06:15:56Z" }
+generated: { by: "claude-code/claude-opus-5-5", at: "2026-11-28T05:39:42Z" }
 verified:
   - { by: "human:owner", at: "2026-11-20T15:31:00Z" }
 sources:
@@ -106,7 +106,7 @@ Restart the agent after first MCP configuration. The project MCP launchers and t
 - `llm_wiki.py lint --strict` exits 0; it also runs `okf-generate`'s `validate.py`.
 - `zg.sh --status --check-ready` succeeds after incremental `zg.sh --index`.
 
-An index created by zg 0.2.2 was reported as needing a rebuild by 0.3.1. If the pinned CLI reports `rebuild required`, confirm before running the bundled launcher with `--index --rebuild`. The bootstrap leaves that decision to the user.
+An index created by zg 0.2.2 was reported as needing a rebuild by 0.3.1. If the pinned CLI reports `rebuild required`, run the bundled launcher with `--index --rebuild --embedding local/potion-multilingual-128m` (or the index's current model) and pass the project's scan rules again. For an incompatible index, zg otherwise picks a model from its own defaults and drops saved scan rules. The rebuild itself needs no confirmation ([ADR-0006](../decisions/ADR-0006-index-lifecycle-routine.md)); the bootstrap does not run it.
 
 # Troubleshooting
 

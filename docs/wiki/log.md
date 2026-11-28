@@ -6,6 +6,7 @@ Newest date first. Each entry starts with the operation in bold, such as **Inges
 
 * **Record**: Proposed [ADR-0006](decisions/ADR-0006-index-lifecycle-routine.md): rebuilding or dropping the project's own index no longer needs approval. Updated [Conventions](concepts/conventions.md) and [ADR-0003](decisions/ADR-0003-karpathy-alignment-plan.md) to point to it.
 * **Record**: Added two index sharp edges to [Gotchas](concepts/gotchas.md): drop before deleting on Windows, and drift after many incremental updates.
+* **Record**: After review, [ADR-0006](decisions/ADR-0006-index-lifecycle-routine.md) also gates `--graph`, all saved scan rules, and dropping an index that holds credentials, and says to pass the project's model and scan rules when creating an index. Updated the rebuild step in [Runbook: skill setup](runbooks/skill-setup.md).
 
 ## 2026-11-23
 
