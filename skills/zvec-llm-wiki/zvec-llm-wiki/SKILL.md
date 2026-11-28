@@ -21,8 +21,8 @@ This skill owns the loop and the llm-wiki extensions. The official sibling skill
 - **`okf-consume`** — how to judge trust tier, status, freshness, and conflicts when answering.
 
 Wiki writes are **involved**: show the pages and intended changes, then edit in the same turn
-unless the user stops you. Keep changes small and evidence-linked. Only destructive index
-operations require prior approval.
+unless the user stops you. Keep changes small and evidence-linked. Index lifecycle operations
+are routine; only changes to what or how zg indexes need prior approval.
 
 ## Wiki structure
 
@@ -122,7 +122,18 @@ The script scaffolds an OKF bundle only when
 updates one index. An existing wiki is untouched. A wiki without `type` frontmatter predates OKF:
 use the `zvec-llm-wiki-okf-migrate` skill.
 
-Never run `--rebuild`, `--drop`, or `--reset-paths` without explicit user approval.
+Incremental `--index`, `--rebuild`, and `--drop` on the target project's index are routine: the
+index lives in the gitignored `.zvec-grep/` and can be rebuilt from the working tree. Ask first
+before changing what or how it indexes: scan rules (`--reset-paths`, globs, `--hidden`,
+`--no-ignore`, and similar), `--graph`, or the embedding model. Also ask before using remote
+embedding (`--allow-remote`, `--api-key`, `--endpoint`, `zg --config`, `zg --auth`), before indexing
+a root outside the target project, and before `--drop` when `.zvec-grep/` holds `credentials.key`
+or `authorization.json`, which the working tree cannot rebuild.
+When creating an index (a new worktree, after `--drop`, or when zg reports `rebuild required`),
+pass the project's model, by default `--embedding local/potion-multilingual-128m`, and its scan
+rules. Without them zg picks a model from its own defaults, which is a gated change.
+On Windows, run `zg.sh --index <root> --drop` before deleting a worktree or directory: the running
+zg server holds the index files open, and the deletion can fail.
 
 For a plugin install, pass `--skip-mcp` from the target project's root so the plugin owns the
 MCP connection. Pass the target project's absolute path as `root` when using MCP search.

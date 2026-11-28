@@ -4,8 +4,8 @@
 **LLM 向け wiki**（`docs/wiki/`）を ingest、query、lint、record、crystallize する。
 
 コアループ: **Query → Work → Ingest/Record/Crystallize → Lint → 増分 `zg.sh --index`**。
-書き込みは involved: ページ計画を示し、ユーザーが止めなければ編集する。破壊的な index 操作は
-引き続き承認必須。
+書き込みは involved: ページ計画を示し、ユーザーが止めなければ編集する。index の再構築や削除は
+通常操作で、zg が何をどう索引するかを変える操作は引き続き承認必須。
 
 wiki は [Open Knowledge Format（OKF）v0.3](https://github.com/open-knowledge-format/open-knowledge-format/blob/main/SPEC.md)
 の bundle。書式・検証・信頼度の規則は公式の `okf-generate` と `okf-consume` スキルが担い、

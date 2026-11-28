@@ -28,7 +28,10 @@ ingest、query、lint、record、crystallize の詳細リファレンス。書�
    手で編集しない。
 4. 書き込みは involved: ページ計画と根拠を示し、ユーザーが止めなければ編集する。
 5. 矛盾は見える形で隔離し、置き換えたページは `deprecated` と `superseded_by` で残す。
-6. 増分 `zg.sh --index` は通常操作。`--rebuild`、`--drop`、`--reset-paths` は明示的な承認必須。
+6. プロジェクト自身のインデックスに対する増分 `zg.sh --index`、`--rebuild`、`--drop` は通常操作。
+   スキャンルール（`--reset-paths`、glob、`--hidden`、`--no-ignore` など）、`--graph`、埋め込みモデルの変更、
+   外部の埋め込みサービスの利用、プロジェクト外のルートの索引は明示的な承認必須。インデックスを新しく
+   作るときは、プロジェクトのモデルとスキャンルールを渡す（SKILL.md 参照）。
 
 ## ページ契約（OKF への llm-wiki の追加）
 

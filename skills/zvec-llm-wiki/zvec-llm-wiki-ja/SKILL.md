@@ -24,7 +24,8 @@ wiki は [OKF v0.3](https://github.com/open-knowledge-format/open-knowledge-form
 - **`okf-consume`** — 回答時の信頼度（trust tier）、status、鮮度、矛盾の判断。
 
 Wiki の書き込みは **involved**: ページと変更予定を示し、ユーザーが止めなければ同じターンで
-編集する。変更は小さく、根拠へのリンクを保つ。事前承認が必要なのは破壊的なインデックス操作だけ。
+編集する。変更は小さく、根拠へのリンクを保つ。インデックスの作成・更新・再構築・削除は通常操作で、
+事前承認が必要なのは、zg が何をどう索引するかを変える操作だけ。
 
 ## Wiki 構造
 
@@ -121,7 +122,17 @@ Node.js 22+ と、PyYAML 入りの Python 3.9+ が必要。Windows で `python3`
 既存 wiki には触れない。`type` frontmatter の無い wiki は OKF 以前の形式なので、
 `zvec-llm-wiki-okf-migrate-ja` スキルで移行する。
 
-ユーザーの明示的な承認なしに `--rebuild`、`--drop`、`--reset-paths` を実行しない。
+対象プロジェクトのインデックスに対する増分 `--index`、`--rebuild`、`--drop` は通常操作。インデックスは
+gitignore 済みの `.zvec-grep/` にあり、作業ツリーから作り直せる。索引の対象や方法の変更は先に確認する。
+対象は、スキャンルール（`--reset-paths`、glob、`--hidden`、`--no-ignore` など）、`--graph`、埋め込みモデル。
+外部の埋め込みサービスの利用（`--allow-remote`、`--api-key`、`--endpoint`、`zg --config`、`zg --auth`）、
+対象プロジェクト外のルートの索引、`.zvec-grep/` に `credentials.key` か `authorization.json` があるときの
+`--drop` も先に確認する。この2つは作業ツリーから作り直せない。
+インデックスを新しく作るとき（新しいワークツリー、`--drop` の後、zg が `rebuild required` を出したとき）は、
+プロジェクトのモデル（既定は `--embedding local/potion-multilingual-128m`）とスキャンルールを渡す。
+渡さないと zg が自分の既定からモデルを選び、確認が必要な変更になる。
+Windows では、ワークツリーやディレクトリを消す前に `zg.sh --index <root> --drop` を実行する。動いている
+zg サーバーがインデックスのファイルを開いたままにしており、削除に失敗することがある。
 
 プラグイン経由で導入した場合は、対象プロジェクトのルートでこのスクリプトに
 `--skip-mcp` を渡す。MCP の検索では対象プロジェクトの絶対パスを `root` に指定する。
