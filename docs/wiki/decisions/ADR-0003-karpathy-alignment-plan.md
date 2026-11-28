@@ -176,7 +176,7 @@ Karpathy: the LLM writes the wiki; the human sources, reads summaries, and steer
 
 **involved:** show pages (and zg spans when useful), then write unless the user interrupts.
 
-**Not a wiki lock:** zg `--rebuild` / `--drop` / `--reset-paths` still need explicit confirmation (see [ADR-0006](ADR-0006-index-lifecycle-routine.md)).
+**Not a wiki lock:** zg `--reset-paths` still needs explicit confirmation; [ADR-0006](ADR-0006-index-lifecycle-routine.md) proposes making `--rebuild` and `--drop` routine.
 
 # Consequences
 

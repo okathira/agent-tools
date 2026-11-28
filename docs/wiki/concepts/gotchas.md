@@ -87,7 +87,7 @@ npm 11.16 added the `--allow-scripts` config. Older npm runs install scripts by 
 
 # Drop an index before deleting its directory on Windows
 
-On Windows, `git worktree remove --force` can fail with `Invalid argument` while zg holds a large index open. Run `zg.sh --index <root> --drop` first; the directory then deletes.[^issue-11]
+On Windows, `git worktree remove --force` can fail with `Invalid argument` because the running zg server holds a large index's files open. Run `zg.sh --index <root> --drop` first; the directory then deletes.[^issue-11]
 
 # Incremental updates can drift from a fresh index
 
