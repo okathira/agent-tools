@@ -48,7 +48,7 @@ From the target repository root, run the bundled bootstrap explicitly. `--skip-m
 bash /path/to/plugin/skills/zvec-llm-wiki/scripts/zg-bootstrap.sh --skip-mcp
 ```
 
-Use `zvec-llm-wiki-ja` in that path for the Japanese package, which is deprecated until zvec-grep supports Japanese full-text search. Keep the CPU multilingual default (`local/potion-multilingual-128m`) for the first test. For a new index, `--embedding local/embeddinggemma-300m` or `--embedding local/qwen3-embedding-0.6b` opts into a larger local model. Use a supported CUDA or Metal runtime to accelerate it. Changing the model on an existing index requires an explicit rebuild.
+Use `zvec-llm-wiki-ja` in that path for the Japanese package. It and Japanese-language wikis are deprecated until zvec-grep supports Japanese full-text search. Keep the CPU multilingual default (`local/potion-multilingual-128m`) for the first test. For a new index, `--embedding local/embeddinggemma-300m` or `--embedding local/qwen3-embedding-0.6b` opts into a larger local model. Use a supported CUDA or Metal runtime to accelerate it. Changing the model on an existing index requires an explicit rebuild.
 
 ## Pass criteria
 

@@ -48,7 +48,7 @@ zg を更新する場合は [zvec-grep.version](zvec-grep.version) を変更し�
 bash /path/to/plugin/skills/zvec-llm-wiki-ja/scripts/zg-bootstrap.sh --skip-mcp
 ```
 
-`zvec-llm-wiki-ja` は、zvec-grep が日本語の全文検索に対応するまで非推奨です。英語版の場合はパスの `zvec-llm-wiki-ja` を `zvec-llm-wiki` に置き換えます。初回テストは CPU で動く多言語の既定モデル `local/potion-multilingual-128m` を使います。新しいインデックスでは `--embedding local/embeddinggemma-300m` または `--embedding local/qwen3-embedding-0.6b` も選べます。対応する CUDA または Metal ランタイムがあれば GPU で実行できます。既存インデックスのモデル変更には明示的な再構築が必要です。
+`zvec-llm-wiki-ja` と日本語で書く wiki は、zvec-grep が日本語の全文検索に対応するまで非推奨です。英語版の場合はパスの `zvec-llm-wiki-ja` を `zvec-llm-wiki` に置き換えます。初回テストは CPU で動く多言語の既定モデル `local/potion-multilingual-128m` を使います。新しいインデックスでは `--embedding local/embeddinggemma-300m` または `--embedding local/qwen3-embedding-0.6b` も選べます。対応する CUDA または Metal ランタイムがあれば GPU で実行できます。既存インデックスのモデル変更には明示的な再構築が必要です。
 
 ## 合格条件
 

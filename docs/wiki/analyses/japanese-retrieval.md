@@ -44,7 +44,7 @@ An 8-document test index on 2026-11-28 showed these FTS results:
 - `設定`, `東京`, and `構築` returned no hit, although documents contain them.
 - Kana appear to split into single characters matched with OR. A query with kana hits any document that shares one kana.
 - `京都` matched a document containing only `東京都`.
-- Spaces become tokens, so a multi-word query in any language matches every document with a space. A single ASCII word such as `fox` matched correctly.
+- Spaces become tokens, so a multi-word query in any language matches every document with a space. A single ASCII word such as `fox` matched correctly. The lexical half of a multi-word hybrid query uses the same tokenizer, on English wikis too; its effect on hybrid ranking was not measured.
 - Compounds in the Chinese dictionary, such as `形態素解析` and `関西国際空港`, matched correctly.
 
 Vector search and the default hybrid search ranked the right document first for the same queries, but the test set was small.
@@ -55,7 +55,7 @@ Separately, an index updated incrementally many times ranked a Japanese query ve
 
 # Upstream status
 
-Issue #387 asks for a configurable FTS analysis chain.[^issue-387] PR #438 adds `--fts-tokenizer` and related options and makes `standard` the default for new indexes. It was open and unreleased on 2026-11-28.[^pr-438] The `ngram` tokenizer would likely stop the missed Japanese terms; this is untested.
+Issue #387 asks for a configurable FTS analysis chain.[^issue-387] PR #438 adds `--fts-tokenizer` and related options and makes `standard` the default for new indexes. It was open and unreleased on 2026-11-28.[^pr-438] It has no Japanese preset: `zh` uses jieba and the other language presets use `standard` with a Snowball stemmer, so releasing it alone would not fix Japanese. The `ngram` tokenizer would likely stop the missed Japanese terms; this is untested.
 
 # Workarounds
 

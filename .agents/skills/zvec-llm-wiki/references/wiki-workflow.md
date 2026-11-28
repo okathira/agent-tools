@@ -98,7 +98,8 @@ glossary. OKF `tags` are cross-cutting categories; do not put aliases there.
 ## Staged query
 
 1. Read `docs/wiki/index.md`, then the directory indexes that relate to the task.
-2. Use zg hybrid search scoped to `docs/wiki/**` when the indexes are insufficient.
+2. Use zg hybrid search scoped to `docs/wiki/**` when the indexes are insufficient. Pass each
+   supplementary `fts` entry as a single word with no spaces.
 3. Use zg managed rg (or native rg) for known names, aliases, paths, and Japanese proper nouns.
 4. Widen to `docs/raw/**` or code only after wiki evidence is insufficient.
 5. Stop when evidence is enough. Apply `okf-consume` trust, status, freshness, and conflict rules.

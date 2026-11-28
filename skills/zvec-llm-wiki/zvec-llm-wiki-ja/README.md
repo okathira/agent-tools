@@ -8,7 +8,7 @@
 > かな 1 文字の一致で誤ヒットしたりする。日本語と英語に最適化したエンジンの llm-wiki を別スキルとして
 > 作る予定で、このスキルからの移行スキルも作る。それまで日本語の wiki では、語句そのものは
 > `zg.sh --rg -F` で、概念はハイブリッド検索か `--vector` で探す。`--fts` は英数字の識別子 1 語に限り、
-> 日本語の名前は `x-zvec-aliases` に入れる。
+> 日本語の名前は `x-zvec-aliases` に入れる。公開と修正は続けるが、日本語向けの新機能は加えない。
 > 詳細: [Japanese retrieval with zvec-grep](https://github.com/okathira/agent-tools/blob/main/docs/wiki/analyses/japanese-retrieval.md)（英語）
 
 コアループ: **Query → Work → Ingest/Record/Crystallize → Lint → 増分 `zg.sh --index`**。

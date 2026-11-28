@@ -26,7 +26,7 @@ zvec-grep 0.3.1 tokenizes full text with the Chinese jieba segmenter and offers 
 
 1. Writing a wiki in Japanese with zvec-llm-wiki is deprecated until upstream zvec-grep releases Japanese-capable full-text tokenization.
 2. `zvec-llm-wiki-ja` and `zvec-llm-wiki-okf-migrate-ja` are deprecated on the same terms. They stay published and receive the fixes made to the English packages, but no new Japanese-specific features.
-3. A separate llm-wiki skill on an engine optimized for Japanese and English is planned, with a skill that migrates wikis from zvec-llm-wiki.
+3. A separate llm-wiki skill on an engine optimized for Japanese and English is planned, with a skill that migrates wikis from zvec-llm-wiki. This amends the "Japanese (engine locked)" section of [ADR-0003](ADR-0003-karpathy-alignment-plan.md), which said not to switch engines to fix CJK. zvec-llm-wiki itself keeps zg.
 4. When zvec-grep releases configurable tokenization, measure Japanese retrieval on a fresh index, then lift or keep this deprecation.
 
 # Why (rationale)
@@ -51,6 +51,7 @@ zvec-grep 0.3.1 tokenizes full text with the Chinese jieba segmenter and offers 
 
 - [Japanese retrieval with zvec-grep](../analyses/japanese-retrieval.md)
 - [ADR-0001](ADR-0001-locale-independence.md)
+- [ADR-0003](ADR-0003-karpathy-alignment-plan.md)
 - [Gotchas](../concepts/gotchas.md)
 
 [^issue-387]: zvec-grep issue #387: configurable FTS analysis

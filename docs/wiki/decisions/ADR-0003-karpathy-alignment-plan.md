@@ -65,6 +65,8 @@ qmd still has a thicker rerank pipeline. That optimizes the wrong layer for this
 
 `index.md` + `x-zvec-aliases` (漢字 / カナ / English) remain the primary Japanese strategy. zg backup: hybrid for related pages, **rg for exact names**. Do not assume BM25/jieba is good Japanese. Do not switch engines to fix CJK; fix aliases and, if needed, the zg embedding model.
 
+[ADR-0007](ADR-0007-deprecate-japanese.md) (draft) amends this section: Japanese use is deprecated until zg supports Japanese full-text search, and a separate llm-wiki on another engine is planned. zvec-llm-wiki itself keeps zg.
+
 # zg-shaped architecture (adjustments to the earlier plan)
 
 These are the deltas that appear once zg is not "any search box" but the post's product.
